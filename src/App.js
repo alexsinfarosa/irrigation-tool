@@ -1,28 +1,52 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { AppContext } from "./AppContext";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+import Main from "./Main";
+import SetupField from "./SetupField";
+
+const getLocation = () => {
+  const geolocation = navigator.geolocation;
+
+  const location = new Promise((resolve, reject) => {
+    if (!geolocation) {
+      reject(new Error("Not Supported"));
+    }
+
+    geolocation.getCurrentPosition(
+      position => {
+        resolve(position);
+      }
+      // () => {
+      //   reject(new Error("Permission denied"));
+      // } CHECK THIS!!!!
     );
-  }
-}
+  });
 
-export default App;
+  return {
+    type: "GET_LOCATION",
+    payload: location
+  };
+};
+
+export default () => {
+  const [screenIdx, setScreenIdx] = useState(1);
+  const [swipeble, setSwipeble] = useState("main");
+  const [location, setLocation] = useState(null);
+
+  useEffect(async () => {
+    const res = await getLocation();
+    res.payload.then(res => {
+      const latitude = res.coords.latitude;
+      const longitude = res.coords.longitude;
+      setLocation({ latitude, longitude });
+    });
+  }, []);
+
+  return (
+    <AppContext.Provider
+      value={{ screenIdx, setScreenIdx, swipeble, setSwipeble, location }}
+    >
+      {swipeble === "main" ? <Main /> : <SetupField />}
+    </AppContext.Provider>
+  );
+};
