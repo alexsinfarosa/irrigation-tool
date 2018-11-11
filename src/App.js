@@ -49,7 +49,8 @@ const fieldInitialState = {
 export default () => {
   const [today, setToday] = useState(new Date("07/07/2018")); //TESTING!!
   const [todayIdx, setTodayIdx] = useState(0); //TESTING!!
-  const [screenIdx, setScreenIdx] = useState(0);
+
+  const [screenIdx, setScreenIdx] = useState(1);
   const [swipeble, setSwipeble] = useState("main");
   const [location, setLocation] = useState(null);
   const [fields, setFields] = useState([]);
@@ -72,7 +73,10 @@ export default () => {
     field.data = data;
     field.forecast = forecast;
     setField(field);
-    setFields([field, ...fields]);
+
+    const fieldsUpdated = [field, ...fields];
+    setFields(fieldsUpdated);
+    writeToLocalstorage(fieldsUpdated);
   };
 
   const clearField = () => {
@@ -98,7 +102,7 @@ export default () => {
     setFields(fieldsUpdated);
     fieldsUpdated.length === 0
       ? deleteFromLocalstorage()
-      : writeToLocalstorage(fields);
+      : writeToLocalstorage(fieldsUpdated);
   };
 
   // Get user current latitude and longitude -------------------------------
@@ -113,12 +117,13 @@ export default () => {
   }, []);
 
   // write to localStorage when fields.length changes
-  useEffect(
-    () => {
-      fields.length > 0 && writeToLocalstorage(fields);
-    },
-    [fields.length]
-  );
+  // useEffect(
+  //   () => {
+  //     console.log(fields.length !== 0);
+  //     fields.length !== 0 && writeToLocalstorage(fields);
+  //   },
+  //   [fields.length]
+  // );
 
   // Fetch forecast data ----------------------------------------------------
   const fetchForecastData = (latitude, longitude) => {
@@ -137,7 +142,6 @@ export default () => {
 
   // LOCALSTORAGE------------------------------------------------------------
   const writeToLocalstorage = fields => {
-    console.log(fields);
     console.log("writeToLocalstorage");
     localStorage.setItem("nrcc-irrigation-tool", JSON.stringify(fields));
   };
@@ -170,8 +174,8 @@ export default () => {
     localStorage.removeItem("nrcc-irrigation-tool");
   };
 
-  console.log(field);
-  console.log(fields);
+  // console.log(field);
+  // console.log(fields);
 
   return (
     <AppContext.Provider
