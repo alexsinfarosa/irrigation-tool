@@ -23,10 +23,15 @@ const styles = theme => ({
 
 function FieldIrrigation(props) {
   // console.log("FieldIrrigation Component");
-  const [irrigationDate, setIrrigationDate] = useState(new Date());
-  const { setSwipeble, setScreenIdx, field, setField, addField } = useContext(
-    AppContext
-  );
+  const {
+    setSwipeble,
+    setScreenIdx,
+    field,
+    setField,
+    addField,
+    today
+  } = useContext(AppContext);
+  const [irrigationDate, setIrrigationDate] = useState(new Date(today));
   const { classes, theme, slideIdx, setSlideIdx } = props;
   return (
     <div className={classes.root}>
@@ -67,6 +72,7 @@ function FieldIrrigation(props) {
               onChange={date => setIrrigationDate(date)}
               disableFuture
               format="MM/dd/yyyy"
+              maxDate={new Date(today)}
               mask={[/\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/]}
             />
           </Grid>

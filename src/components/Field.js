@@ -3,13 +3,16 @@ import React, { useContext } from "react";
 import { withStyles, withTheme } from "@material-ui/core/styles";
 import withRoot from "../withRoot";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
 import HomeIcon from "@material-ui/icons/Home";
 import ListIcon from "@material-ui/icons/ListOutlined";
 import CloudIcon from "@material-ui/icons/CloudOutlined";
 
 import Navigation from "./Navigation";
 import Loading from "./Loading";
+import FieldTopChart from "./FieldTopChart";
+import FieldBarChart from "./FieldBarChart";
+
 import { AppContext } from "../AppContext";
 
 const styles = theme => ({
@@ -61,14 +64,28 @@ function Field(props) {
       ) : (
         <div
           style={{
-            padding: theme.spacing.unit,
             overflowY: "scroll"
           }}
         >
-          <Grid container spacing={theme.spacing.unit * 2}>
-            <Grid item xs={12}>
-              <Paper>{field.address}</Paper>
-            </Grid>
+          <Grid container>
+            <FieldTopChart />
+            <FieldBarChart />
+
+            <Button
+              style={{
+                height: 60,
+                width: 220,
+                borderRadius: 0,
+                margin: "0 auto"
+              }}
+              size="large"
+              variant="outlined"
+              color="primary"
+
+              // onClick={() => setDisplayDeficitScreen(true)}
+            >
+              I watered!
+            </Button>
           </Grid>
         </div>
       )}

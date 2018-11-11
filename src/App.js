@@ -11,6 +11,8 @@ import SetupField from "./SetupField";
 import Landing from "./components/Landing";
 import Loading from "./components/Loading";
 
+import format from "date-fns/format";
+
 const getLocation = () => {
   const geolocation = navigator.geolocation;
 
@@ -49,7 +51,7 @@ const fieldInitialState = {
 };
 
 export default () => {
-  const [today, setToday] = useState(new Date("07/07/2018")); //TESTING!!
+  const [today] = useState(new Date("10/31/2018")); //TESTING!!
   const [todayIdx, setTodayIdx] = useState(0); //TESTING!!
 
   const [isLoading, setIsLoading] = useState(false);
@@ -69,7 +71,10 @@ export default () => {
       field.soilCapacity,
       0
     );
-    setTodayIdx(data.findIndex(obj => obj.date === today));
+    const todayIdx = data.findIndex(
+      obj => obj.date === format(today, "MM/dd/yyyy")
+    );
+    setTodayIdx(todayIdx);
 
     const forecast = await fetchForecastData(field.latitude, field.longitude);
 
@@ -117,6 +122,17 @@ export default () => {
     });
     readFromLocalstorage();
   }, []);
+
+  useEffect(
+    () => {
+      if (field.data) {
+        setTodayIdx(
+          field.data.findIndex(obj => obj.date === format(today, "MM/dd/yyyy"))
+        );
+      }
+    },
+    [fields]
+  );
 
   // Fetch forecast data ----------------------------------------------------
   const fetchForecastData = (latitude, longitude) => {
@@ -184,6 +200,7 @@ export default () => {
         addField,
         clearField,
         today,
+        todayIdx,
         deleteField,
         selectField
       }}
