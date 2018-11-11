@@ -9,6 +9,7 @@ import ListIcon from "@material-ui/icons/ListOutlined";
 import CloudIcon from "@material-ui/icons/CloudOutlined";
 
 import Navigation from "./Navigation";
+import Loading from "./Loading";
 import { AppContext } from "../AppContext";
 
 const styles = theme => ({
@@ -30,7 +31,7 @@ const styles = theme => ({
 
 function Field(props) {
   // console.log("Field Component");
-  const { screenIdx, setScreenIdx } = useContext(AppContext);
+  const { screenIdx, setScreenIdx, isLoading, field } = useContext(AppContext);
   const { classes, theme } = props;
 
   return (
@@ -55,63 +56,22 @@ function Field(props) {
         }
       />
 
-      <div
-        style={{
-          padding: theme.spacing.unit,
-          overflowY: "scroll"
-        }}
-      >
-        <Grid container spacing={theme.spacing.unit * 2}>
-          <Grid item xs={6}>
-            <Paper>xs=6</Paper>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div
+          style={{
+            padding: theme.spacing.unit,
+            overflowY: "scroll"
+          }}
+        >
+          <Grid container spacing={theme.spacing.unit * 2}>
+            <Grid item xs={12}>
+              <Paper>{field.address}</Paper>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <Paper>xs=6</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>xs=12</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>FIELD</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>FIELD</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>FIELD</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>FIELD</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>FIELD</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>FIELD</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>FIELD</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>FIELD</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>FIELD</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>FIELD</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>FIELD</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>FIELD</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper>FIELD</Paper>
-          </Grid>
-        </Grid>
-      </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -4,10 +4,12 @@ import { AppContext } from "./AppContext";
 import axios from "axios";
 import { PROXYDARKSKY } from "./utils/api";
 
+import { getPET } from "./utils/utils";
+
 import Main from "./Main";
 import SetupField from "./SetupField";
-
-import { getPET } from "./utils/utils";
+import Landing from "./components/Landing";
+import Loading from "./components/Loading";
 
 const getLocation = () => {
   const geolocation = navigator.geolocation;
@@ -50,6 +52,7 @@ export default () => {
   const [today, setToday] = useState(new Date("07/07/2018")); //TESTING!!
   const [todayIdx, setTodayIdx] = useState(0); //TESTING!!
 
+  const [isLoading, setIsLoading] = useState(false);
   const [screenIdx, setScreenIdx] = useState(1);
   const [swipeble, setSwipeble] = useState("main");
   const [location, setLocation] = useState(null);
@@ -58,6 +61,7 @@ export default () => {
 
   // CRUD operations ----------------------------------------------------
   const addField = async () => {
+    setIsLoading(true);
     const data = await getPET(
       field.irrigationDate,
       field.latitude,
@@ -77,13 +81,11 @@ export default () => {
     const fieldsUpdated = [field, ...fields];
     setFields(fieldsUpdated);
     writeToLocalstorage(fieldsUpdated);
+    setIsLoading(false);
   };
 
   const clearField = () => {
     setField(fieldInitialState);
-    // fields.length === 0
-    // ? deleteFromLocalstorage()
-    // : writeToLocalstorage(fields);
   };
 
   const selectField = id => {
@@ -116,15 +118,6 @@ export default () => {
     readFromLocalstorage();
   }, []);
 
-  // write to localStorage when fields.length changes
-  // useEffect(
-  //   () => {
-  //     console.log(fields.length !== 0);
-  //     fields.length !== 0 && writeToLocalstorage(fields);
-  //   },
-  //   [fields.length]
-  // );
-
   // Fetch forecast data ----------------------------------------------------
   const fetchForecastData = (latitude, longitude) => {
     const url = `${PROXYDARKSKY}/${latitude},${longitude}?exclude=flags,minutely,alerts,hourly`;
@@ -142,12 +135,12 @@ export default () => {
 
   // LOCALSTORAGE------------------------------------------------------------
   const writeToLocalstorage = fields => {
-    console.log("writeToLocalstorage");
+    // console.log("writeToLocalstorage");
     localStorage.setItem("nrcc-irrigation-tool", JSON.stringify(fields));
   };
 
   const readFromLocalstorage = () => {
-    console.log("readFromLocalStorage");
+    // console.log("readFromLocalStorage");
     const localStorageRef = localStorage.getItem("nrcc-irrigation-tool");
     // console.log(localStorageRef);
     if (localStorageRef) {
@@ -195,7 +188,10 @@ export default () => {
         selectField
       }}
     >
-      {swipeble === "main" ? <Main /> : <SetupField />}
+      {swipeble === "main" && isLoading && <Loading />}
+      {swipeble === "main" && fields.length === 0 && !isLoading && <Landing />}
+      {swipeble === "main" && fields.length > 0 && !isLoading && <Main />}
+      {swipeble !== "main" && <SetupField />}
     </AppContext.Provider>
   );
 };

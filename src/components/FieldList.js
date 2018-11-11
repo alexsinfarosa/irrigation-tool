@@ -23,6 +23,7 @@ import format from "date-fns/format";
 import { determineColor } from "../utils/utils";
 
 import Navigation from "./Navigation";
+import Loading from "./Loading";
 import { AppContext } from "../AppContext";
 
 const styles = theme => ({
@@ -54,7 +55,8 @@ function FieldList(props) {
     fields,
     today,
     deleteField,
-    selectField
+    selectField,
+    isLoading
   } = useContext(AppContext);
   const { classes, theme } = props;
 
@@ -80,110 +82,114 @@ function FieldList(props) {
         }
       />
 
-      <div
-        style={{
-          padding: theme.spacing.unit,
-          overflowY: "scroll"
-        }}
-      >
-        <Grid container spacing={theme.spacing.unit * 2}>
-          {fields.map(field => {
-            const todayObj = field.data.find(
-              obj => obj.date === format(today, "MM/dd/yyyy")
-            );
-            const color = determineColor(todayObj.deficit);
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div
+          style={{
+            padding: theme.spacing.unit,
+            overflowY: "scroll"
+          }}
+        >
+          <Grid container spacing={theme.spacing.unit * 2}>
+            {fields.map(field => {
+              const todayObj = field.data.find(
+                obj => obj.date === format(today, "MM/dd/yyyy")
+              );
+              const color = determineColor(todayObj.deficit);
 
-            return (
-              <Grid item xs={12} key={field.id}>
-                <Paper
-                  style={{
-                    borderLeft: `16px solid ${color}`
-                  }}
-                >
-                  <List component="nav">
-                    <ListItem
-                      button
-                      onClick={() => {
-                        setFieldId(field.id);
-                        selectField(field.id);
-                        setScreenIdx(screenIdx - 1);
-                      }}
-                    >
-                      <div
-                        style={{
-                          marginLeft: -40
+              return (
+                <Grid item xs={12} key={field.id}>
+                  <Paper
+                    style={{
+                      borderLeft: `16px solid ${color}`
+                    }}
+                  >
+                    <List component="nav">
+                      <ListItem
+                        button
+                        onClick={() => {
+                          setFieldId(field.id);
+                          selectField(field.id);
+                          setScreenIdx(screenIdx - 1);
                         }}
                       >
-                        <Button
-                          variant="fab"
+                        <div
                           style={{
-                            background: color,
-                            boxShadow: "none"
-                          }}
-                          mini
-                        >
-                          <span style={{ fontSize: 13 }}>
-                            {todayObj.deficit}
-                          </span>
-                        </Button>
-                      </div>
-
-                      <ListItemText
-                        primary={field.address.split(",")[0]}
-                        secondary={format(
-                          field.irrigationDate,
-                          "MMMM do, YYYY"
-                        )}
-                      />
-
-                      <ListItemSecondaryAction>
-                        <IconButton
-                          aria-label="Delete"
-                          onClick={() => {
-                            setFieldId(field.id);
-                            setIsDialog(true);
+                            marginLeft: -40
                           }}
                         >
-                          <DeleteIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                  </List>
-                </Paper>
-              </Grid>
-            );
-          })}
-        </Grid>
+                          <Button
+                            variant="fab"
+                            style={{
+                              background: color,
+                              boxShadow: "none"
+                            }}
+                            mini
+                          >
+                            <span style={{ fontSize: 13 }}>
+                              {todayObj.deficit}
+                            </span>
+                          </Button>
+                        </div>
 
-        {/* DIALOG -----------------------------*/}
-        <Dialog
-          open={isDialog}
-          onClose={() => setIsDialog(false)}
-          aria-labelledby="alert-dialog-delete-field"
-          aria-describedby="alert-dialog-delete-selected-field"
-          hideBackdrop={true}
-        >
-          <DialogTitle id="alert-dialog-title">
-            Are you sure you want to delete this field?
-          </DialogTitle>
-          <DialogContent />
-          <DialogActions>
-            <Button onClick={() => setIsDialog(false)} color="primary">
-              Undo
-            </Button>
-            <Button
-              onClick={() => {
-                deleteField(fieldId);
-                setIsDialog(false);
-              }}
-              color="primary"
-              autoFocus
-            >
-              Yes
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+                        <ListItemText
+                          primary={field.address.split(",")[0]}
+                          secondary={format(
+                            field.irrigationDate,
+                            "MMMM do, YYYY"
+                          )}
+                        />
+
+                        <ListItemSecondaryAction>
+                          <IconButton
+                            aria-label="Delete"
+                            onClick={() => {
+                              setFieldId(field.id);
+                              setIsDialog(true);
+                            }}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    </List>
+                  </Paper>
+                </Grid>
+              );
+            })}
+          </Grid>
+
+          {/* DIALOG -----------------------------*/}
+          <Dialog
+            open={isDialog}
+            onClose={() => setIsDialog(false)}
+            aria-labelledby="alert-dialog-delete-field"
+            aria-describedby="alert-dialog-delete-selected-field"
+            hideBackdrop={true}
+          >
+            <DialogTitle id="alert-dialog-title">
+              Are you sure you want to delete this field?
+            </DialogTitle>
+            <DialogContent />
+            <DialogActions>
+              <Button onClick={() => setIsDialog(false)} color="primary">
+                Undo
+              </Button>
+              <Button
+                onClick={() => {
+                  deleteField(fieldId);
+                  setIsDialog(false);
+                }}
+                color="primary"
+                autoFocus
+              >
+                Yes
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      )}
     </div>
   );
 }
