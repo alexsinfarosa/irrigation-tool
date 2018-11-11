@@ -29,7 +29,7 @@ const styles = theme => ({
 });
 
 function Field(props) {
-  console.log("Field Component");
+  // console.log("Field Component");
   const { screenIdx, setScreenIdx } = useContext(AppContext);
   const { classes, theme } = props;
 

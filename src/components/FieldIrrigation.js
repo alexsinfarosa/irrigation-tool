@@ -22,9 +22,9 @@ const styles = theme => ({
 });
 
 function FieldIrrigation(props) {
-  console.log("FieldIrrigation Component");
+  // console.log("FieldIrrigation Component");
   const [irrigationDate, setIrrigationDate] = useState(new Date());
-  const { setSwipeble } = useContext(AppContext);
+  const { setSwipeble, field, setField, addField } = useContext(AppContext);
   const { classes, theme, slideIdx, setSlideIdx } = props;
   return (
     <div className={classes.root}>
@@ -81,7 +81,11 @@ function FieldIrrigation(props) {
               variant="outlined"
               color="secondary"
               disabled={!irrigationDate}
-              onClick={() => setSwipeble("main")}
+              onClick={() => {
+                setField({ ...field, irrigationDate });
+                addField();
+                setSwipeble("main");
+              }}
             >
               start
             </Button>

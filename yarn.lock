@@ -1753,7 +1753,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@^6.20.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
@@ -8337,6 +8337,13 @@ react-scripts@2.1.1:
     workbox-webpack-plugin "3.6.3"
   optionalDependencies:
     fsevents "1.2.4"
+
+react-swipe-to-delete-component@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/react-swipe-to-delete-component/-/react-swipe-to-delete-component-0.3.4.tgz#03608e21fb6504339ab6cf1a8991f29915069b5e"
+  integrity sha512-xKpmk5ns83rhJzKzSHnVOu33FA00Te1LMgt/TFk4cbJ2nw8wPYuluFlzz3C3pyIoP3dwJX+Q91soeW6JXyIBzA==
+  dependencies:
+    babel-runtime "^6.20.0"
 
 react-swipeable-views-core@^0.13.0:
   version "0.13.0"

@@ -38,14 +38,15 @@ const styles = theme => ({
 });
 
 function FieldLocation(props) {
-  console.log("FieldLocation Component");
+  // console.log("FieldLocation Component");
   const [address, setAddress] = useState("");
-  const [fieldName, setFieldName] = useState("");
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { setSwipeble, location } = useContext(AppContext);
+  const { setSwipeble, location, field, setField, clearField } = useContext(
+    AppContext
+  );
   const { classes, theme, slideIdx, setSlideIdx } = props;
 
   // select address from the list of suggestions
@@ -59,7 +60,6 @@ function FieldLocation(props) {
         } else {
           setLatitude(lat);
           setLongitude(lng);
-          setFieldName(address.split(",")[0]);
         }
       })
       .catch(error => {
@@ -73,7 +73,6 @@ function FieldLocation(props) {
     Geocode.fromLatLng(`${location.latitude}`, `${location.longitude}`).then(
       response => {
         setAddress(response.results[0].formatted_address);
-        setFieldName(address.split(",")[0]);
         setLatitude(location.latitude);
         setLongitude(location.longitude);
       },
@@ -93,7 +92,6 @@ function FieldLocation(props) {
   // reset parameters
   const handleCloseClick = () => {
     setAddress("");
-    setFieldName("");
     setLatitude(null);
     setLongitude(null);
     setErrorMessage("");
@@ -106,6 +104,7 @@ function FieldLocation(props) {
           <ArrowBackIcon
             onClick={() => {
               handleCloseClick();
+              clearField();
               setSwipeble("main");
             }}
           />
@@ -238,7 +237,16 @@ function FieldLocation(props) {
                 size="large"
                 variant="outlined"
                 color="secondary"
-                onClick={() => setSlideIdx(slideIdx + 1)}
+                onClick={() => {
+                  setField({
+                    ...field,
+                    address,
+                    latitude,
+                    longitude
+                  });
+
+                  setSlideIdx(slideIdx + 1);
+                }}
               >
                 continue
               </Button>

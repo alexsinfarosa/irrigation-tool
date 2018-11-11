@@ -13,7 +13,7 @@ const styles = theme => ({
 });
 
 function Landing(props) {
-  console.log("Landing Component");
+  // console.log("Landing Component");
   const { classes } = props;
   return (
     <div className={classes.root}>

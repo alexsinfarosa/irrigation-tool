@@ -28,7 +28,7 @@ const styles = theme => ({
 });
 
 function Forecast(props) {
-  console.log("Forecast Component");
+  // console.log("Forecast Component");
   const { screenIdx, setScreenIdx } = useContext(AppContext);
   const { classes, theme } = props;
   return (

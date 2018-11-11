@@ -1,11 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 
 import SwipeableViews from "react-swipeable-views";
 import Slide from "@material-ui/core/Slide";
 
 import FieldLocation from "./components/FieldLocation";
 import FieldIrrigation from "./components/FieldIrrigation";
-import { AppContext } from "./AppContext";
+// import { AppContext } from "./AppContext";
 
 export default () => {
   const [slideIdx, setSlideIdx] = useState(0);
