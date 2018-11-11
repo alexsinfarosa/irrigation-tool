@@ -22,10 +22,12 @@ const styles = theme => ({
     height: 20
   }
 });
+
 function FieldDeficitAdj(props) {
-  const { field, todayIdx } = useContext(AppContext);
-  const { classes, theme, value, setValue } = props;
-  console.log(value);
+  const { field, todayIdx, sliderValue, setSliderValue } = useContext(
+    AppContext
+  );
+  const { classes, theme } = props;
   const todayDeficit = field.data[todayIdx].deficit;
 
   return (
@@ -49,12 +51,12 @@ function FieldDeficitAdj(props) {
           gutterBottom
           style={{
             marginBottom: theme.spacing.unit * 6,
-            border: `1px solid ${determineColor(todayDeficit + value)}`,
+            border: `1px solid ${determineColor(todayDeficit + sliderValue)}`,
             padding: 8,
             borderRadius: 10
           }}
         >
-          {value.toFixed(2)} <span style={{ fontSize: 8 }}>unit</span>
+          {sliderValue.toFixed(2)} <span style={{ fontSize: 8 }}>unit</span>
         </Typography>
       </Grid>
 
@@ -64,11 +66,11 @@ function FieldDeficitAdj(props) {
             container: classes.slider,
             thumb: classes.thumb
           }}
-          value={value}
+          value={sliderValue}
           max={2}
           step={0.01}
           aria-labelledby="label"
-          onChange={(e, value) => setValue(value)}
+          onChange={(e, val) => setSliderValue(val)}
         />
       </Grid>
     </Grid>

@@ -36,8 +36,14 @@ const styles = theme => ({
 
 function Field(props) {
   // console.log("Field Component");
-  const { screenIdx, setScreenIdx, isLoading } = useContext(AppContext);
-  const { classes, isAdjScreen, setIsAdjScreen, value, setValue } = props;
+  const {
+    screenIdx,
+    setScreenIdx,
+    isLoading,
+    resetWaterDeficit,
+    setSliderValue
+  } = useContext(AppContext);
+  const { classes, isAdjScreen, setIsAdjScreen } = props;
 
   return (
     <div className={classes.root}>
@@ -73,7 +79,7 @@ function Field(props) {
             <FieldTopChart />
             {isAdjScreen ? (
               <Slide direction="left" in={true} mountOnEnter unmountOnExit>
-                <FieldDeficitAdj value={value} setValue={setValue} />
+                <FieldDeficitAdj />
               </Slide>
             ) : (
               <FieldBarChart />
@@ -89,7 +95,13 @@ function Field(props) {
                 size="large"
                 variant="outlined"
                 onClick={() => {
-                  isAdjScreen ? setIsAdjScreen(false) : setIsAdjScreen(true);
+                  if (isAdjScreen) {
+                    setIsAdjScreen(false);
+                    resetWaterDeficit();
+                  } else {
+                    setIsAdjScreen(true);
+                    setSliderValue(0);
+                  }
                 }}
               >
                 {isAdjScreen ? "update" : "I watered!"}

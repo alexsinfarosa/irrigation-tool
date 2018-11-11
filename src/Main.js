@@ -10,7 +10,6 @@ import { AppContext } from "./AppContext";
 export default () => {
   const { screenIdx, setScreenIdx } = useContext(AppContext);
   const [isAdjScreen, setIsAdjScreen] = useState(false);
-  const [value, setValue] = useState(0);
 
   return (
     <SwipeableViews
@@ -24,12 +23,7 @@ export default () => {
       onChangeIndex={idx => setScreenIdx(idx)}
     >
       <Forecast />
-      <Field
-        isAdjScreen={isAdjScreen}
-        setIsAdjScreen={setIsAdjScreen}
-        value={value}
-        setValue={setValue}
-      />
+      <Field isAdjScreen={isAdjScreen} setIsAdjScreen={setIsAdjScreen} />
       <FieldList />
     </SwipeableViews>
   );

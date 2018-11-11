@@ -4,7 +4,7 @@ import { AppContext } from "./AppContext";
 import axios from "axios";
 import { PROXYDARKSKY } from "./utils/api";
 
-import { getPET } from "./utils/utils";
+import { getPET, runWaterDeficitModel } from "./utils/utils";
 
 import Main from "./Main";
 import SetupField from "./SetupField";
@@ -60,6 +60,7 @@ export default () => {
   const [location, setLocation] = useState(null);
   const [fields, setFields] = useState([]);
   const [field, setField] = useState(fieldInitialState);
+  const [sliderValue, setSliderValue] = useState(0);
 
   // CRUD operations ----------------------------------------------------
   const addField = async () => {
@@ -123,6 +124,7 @@ export default () => {
     readFromLocalstorage();
   }, []);
 
+  // Set today index
   useEffect(
     () => {
       if (field.data) {
@@ -133,6 +135,55 @@ export default () => {
     },
     [fields]
   );
+
+  const resetWaterDeficit = () => {
+    console.log("resetWaterDeficit");
+    let fieldCopy = { ...field };
+    fieldCopy.deficitAdjustments.push(sliderValue);
+
+    console.log(fieldCopy);
+    const pcpns = fieldCopy.data.map(d => d.pcp);
+    const pets = fieldCopy.data.map(d => d.pet);
+
+    const recalculateDeficit = runWaterDeficitModel(
+      pcpns,
+      pets,
+      0,
+      fieldCopy.soilCapacity,
+      fieldCopy.deficitAdjustments,
+      todayIdx
+    );
+
+    console.log(recalculateDeficit);
+    const results = recalculateDeficit.deficitDaily.map((val, i) => {
+      let p = {};
+      p.date = fieldCopy.data[i].date;
+      p.deficit = +val.toFixed(2);
+      p.pet = pets[i];
+      p.pcp = pcpns[i];
+      return p;
+    });
+
+    console.log(results);
+
+    const fieldsCopy = [...fields];
+    const idx = fieldsCopy.findIndex(f => f.id === field.id);
+    const id = Date.now();
+    const irrigationDate = new Date(id);
+
+    fieldCopy.id = id;
+    fieldCopy.irrigationDate = irrigationDate;
+    fieldCopy.data = results;
+    setField(fieldCopy);
+
+    fieldsCopy[idx].id = id;
+    fieldsCopy[idx].irrigationDate = irrigationDate;
+    fieldsCopy[idx].data = results;
+    fieldsCopy[idx].deficitAdjustments = fieldCopy.deficitAdjustments;
+    setFields(fieldsCopy);
+
+    writeToLocalstorage(fieldsCopy);
+  };
 
   // Fetch forecast data ----------------------------------------------------
   const fetchForecastData = (latitude, longitude) => {
@@ -183,9 +234,6 @@ export default () => {
     localStorage.removeItem("nrcc-irrigation-tool");
   };
 
-  // console.log(field);
-  // console.log(fields);
-
   return (
     <AppContext.Provider
       value={{
@@ -202,7 +250,10 @@ export default () => {
         today,
         todayIdx,
         deleteField,
-        selectField
+        selectField,
+        sliderValue,
+        setSliderValue,
+        resetWaterDeficit
       }}
     >
       {swipeble === "main" && isLoading && <Loading />}
