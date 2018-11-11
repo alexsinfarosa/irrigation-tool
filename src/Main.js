@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 
 import SwipeableViews from "react-swipeable-views";
 
@@ -9,8 +9,12 @@ import { AppContext } from "./AppContext";
 
 export default () => {
   const { screenIdx, setScreenIdx } = useContext(AppContext);
+  const [isAdjScreen, setIsAdjScreen] = useState(false);
+  const [value, setValue] = useState(0);
+
   return (
     <SwipeableViews
+      disabled={isAdjScreen}
       containerStyle={{
         height: window.innerHeight,
         WebkitOverflowScrolling: "touch"
@@ -20,7 +24,12 @@ export default () => {
       onChangeIndex={idx => setScreenIdx(idx)}
     >
       <Forecast />
-      <Field />
+      <Field
+        isAdjScreen={isAdjScreen}
+        setIsAdjScreen={setIsAdjScreen}
+        value={value}
+        setValue={setValue}
+      />
       <FieldList />
     </SwipeableViews>
   );

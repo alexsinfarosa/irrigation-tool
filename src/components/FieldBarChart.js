@@ -30,7 +30,7 @@ function FieldBarChart(props) {
   });
 
   return (
-    <Grid item xs={12} align="center">
+    <Grid item xs={12} align="center" style={{ height: 250 }}>
       {results.length >= 3 && (
         <>
           <Typography

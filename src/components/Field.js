@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import HomeIcon from "@material-ui/icons/Home";
 import ListIcon from "@material-ui/icons/ListOutlined";
 import CloudIcon from "@material-ui/icons/CloudOutlined";
+import Slide from "@material-ui/core/Slide";
 
 import Navigation from "./Navigation";
 import Loading from "./Loading";
@@ -14,6 +15,8 @@ import FieldTopChart from "./FieldTopChart";
 import FieldBarChart from "./FieldBarChart";
 
 import { AppContext } from "../AppContext";
+import FieldDeficitAdj from "./FieldDeficitAdj";
+import { determineColor } from "../utils/utils";
 
 const styles = theme => ({
   root: {
@@ -34,8 +37,20 @@ const styles = theme => ({
 
 function Field(props) {
   // console.log("Field Component");
-  const { screenIdx, setScreenIdx, isLoading, field } = useContext(AppContext);
-  const { classes, theme } = props;
+  const { screenIdx, setScreenIdx, isLoading, field, todayIdx } = useContext(
+    AppContext
+  );
+
+  const {
+    classes,
+    theme,
+    isAdjScreen,
+    setIsAdjScreen,
+    value,
+    setValue
+  } = props;
+  const todayDeficit = field.data[todayIdx].deficit;
+  console.log(todayDeficit, value);
 
   return (
     <div className={classes.root}>
@@ -69,23 +84,30 @@ function Field(props) {
         >
           <Grid container>
             <FieldTopChart />
-            <FieldBarChart />
+            {isAdjScreen ? (
+              <Slide direction="left" in={true} mountOnEnter unmountOnExit>
+                <FieldDeficitAdj value={value} setValue={setValue} />
+              </Slide>
+            ) : (
+              <FieldBarChart />
+            )}
 
-            <Button
-              style={{
-                height: 60,
-                width: 220,
-                borderRadius: 0,
-                margin: "0 auto"
-              }}
-              size="large"
-              variant="outlined"
-              color="primary"
-
-              // onClick={() => setDisplayDeficitScreen(true)}
-            >
-              I watered!
-            </Button>
+            <Grid item xs={12} align="center">
+              <Button
+                style={{
+                  height: 60,
+                  width: 220,
+                  border: `1px solid ${determineColor(todayDeficit + value)}`
+                }}
+                size="large"
+                variant="outlined"
+                onClick={() => {
+                  isAdjScreen ? setIsAdjScreen(false) : setIsAdjScreen(true);
+                }}
+              >
+                {isAdjScreen ? "update" : "I watered!"}
+              </Button>
+            </Grid>
           </Grid>
         </div>
       )}
