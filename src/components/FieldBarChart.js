@@ -14,8 +14,7 @@ const styles = theme => ({});
 
 function FieldBarChart(props) {
   const { field, todayIdx } = useContext(AppContext);
-  const { classes, theme } = props;
-  console.log(field, todayIdx);
+  const { theme } = props;
 
   const upToToday = field.data.slice(0, todayIdx + 1);
   const days = upToToday.length;

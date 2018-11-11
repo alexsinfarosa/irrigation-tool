@@ -16,7 +16,6 @@ import FieldBarChart from "./FieldBarChart";
 
 import { AppContext } from "../AppContext";
 import FieldDeficitAdj from "./FieldDeficitAdj";
-import { determineColor } from "../utils/utils";
 
 const styles = theme => ({
   root: {
@@ -37,20 +36,8 @@ const styles = theme => ({
 
 function Field(props) {
   // console.log("Field Component");
-  const { screenIdx, setScreenIdx, isLoading, field, todayIdx } = useContext(
-    AppContext
-  );
-
-  const {
-    classes,
-    theme,
-    isAdjScreen,
-    setIsAdjScreen,
-    value,
-    setValue
-  } = props;
-  const todayDeficit = field.data[todayIdx].deficit;
-  console.log(todayDeficit, value);
+  const { screenIdx, setScreenIdx, isLoading } = useContext(AppContext);
+  const { classes, isAdjScreen, setIsAdjScreen, value, setValue } = props;
 
   return (
     <div className={classes.root}>
@@ -96,9 +83,9 @@ function Field(props) {
               <Button
                 style={{
                   height: 60,
-                  width: 220,
-                  border: `1px solid ${determineColor(todayDeficit + value)}`
+                  width: 220
                 }}
+                color="primary"
                 size="large"
                 variant="outlined"
                 onClick={() => {
