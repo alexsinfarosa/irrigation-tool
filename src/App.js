@@ -12,7 +12,6 @@ import Landing from "./components/Landing";
 import Loading from "./components/Loading";
 
 import format from "date-fns/format";
-import { fi } from "date-fns/locale";
 
 const getLocation = () => {
   const geolocation = navigator.geolocation;
@@ -84,7 +83,6 @@ export default () => {
     field.id = Date.now();
     field.data = data;
     field.forecast = forecast;
-    console.log(field);
     setField(field);
 
     const fieldsUpdated = [field, ...fields];
@@ -100,7 +98,6 @@ export default () => {
   const selectField = id => {
     const field = fields.find(field => field.id === id);
     setField(field);
-    console.log(field);
     // const countHrs = differenceInHours(new Date(), new Date(field.id));
 
     // if (countHrs > 3) {
@@ -143,10 +140,8 @@ export default () => {
   const resetWaterDeficit = () => {
     // console.log("resetWaterDeficit");
     let fieldCopy = { ...field };
-    console.log(sliderValue);
     fieldCopy.deficitAdjustments.push(sliderValue);
 
-    console.log(fieldCopy);
     const pcpns = fieldCopy.data.map(d => d.pcp);
     const pets = fieldCopy.data.map(d => d.pet);
 
@@ -176,7 +171,6 @@ export default () => {
     const id = Date.now();
     const irrigationDate = new Date(id);
 
-    console.log(fieldCopy.deficitAdjustments);
     fieldCopy.id = id;
     fieldCopy.irrigationDate = irrigationDate;
     fieldCopy.data = results;
@@ -188,7 +182,7 @@ export default () => {
     fieldsCopy[idx].data = results;
     fieldsCopy[idx].deficitAdjustments = fieldCopy.deficitAdjustments;
     setFields(fieldsCopy);
-    console.log(fieldsCopy);
+
     writeToLocalstorage(fieldsCopy);
   };
 
