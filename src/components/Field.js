@@ -91,15 +91,12 @@ function Field(props) {
             </Grid>
 
             <FieldTopChart />
-            {isAdjScreen ? (
-              <Slide direction="left" in={true} mountOnEnter unmountOnExit>
-                <FieldDeficitAdj />
-              </Slide>
-            ) : (
-              <FieldBarChart />
-            )}
-
-            <Grid item xs={12} align="center">
+            <Grid
+              item
+              xs={12}
+              align="center"
+              style={{ marginBottom: theme.spacing.unit * 4 }}
+            >
               <Button
                 style={{
                   height: 60,
@@ -121,6 +118,13 @@ function Field(props) {
                 {isAdjScreen ? "update" : "I watered!"}
               </Button>
             </Grid>
+            {isAdjScreen ? (
+              <Slide direction="left" in={true} mountOnEnter unmountOnExit>
+                <FieldDeficitAdj />
+              </Slide>
+            ) : (
+              <FieldBarChart />
+            )}
           </Grid>
         </div>
       )}

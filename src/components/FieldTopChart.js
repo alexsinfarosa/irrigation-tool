@@ -51,6 +51,7 @@ const styles = theme => ({
     alignItems: "center"
   }
 });
+
 function FieldTopChart(props) {
   const { field, todayIdx } = useContext(AppContext);
   const { classes, theme } = props;
@@ -78,7 +79,7 @@ function FieldTopChart(props) {
   });
 
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12} style={{ marginBottom: theme.spacing.unit * 8 }}>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
@@ -105,7 +106,7 @@ function FieldTopChart(props) {
                 style={{
                   border: "none",
                   borderLeft: `16px solid ${d.color}`,
-                  height: 60
+                  height: 40
                 }}
               >
                 <TableCell

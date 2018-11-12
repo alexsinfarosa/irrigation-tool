@@ -46,7 +46,7 @@ function FieldBarChart(props) {
           <ComposedChart
             // style={{ background: "orange" }}
             width={window.innerWidth}
-            height={200}
+            height={350}
             data={results}
             margin={{ top: 32, right: -2, left: -2, bottom: 48 }}
           >

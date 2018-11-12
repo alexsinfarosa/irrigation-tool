@@ -24,10 +24,12 @@ const getLocation = () => {
     geolocation.getCurrentPosition(
       position => {
         resolve(position);
+      },
+      () => {
+        // reject(new Error("Permission denied"));
+        console.log("Current Location - permission denied");
+        return null;
       }
-      // () => {
-      //   reject(new Error("Permission denied"));
-      // } CHECK THIS!!!!
     );
   });
 
@@ -51,8 +53,8 @@ const fieldInitialState = {
 };
 
 export default () => {
-  const [today] = useState(new Date("10/31/2018")); //TESTING!!
-  const [todayIdx, setTodayIdx] = useState(0); //TESTING!!
+  const [today] = useState(new Date("10/31/2018")); //TESTING CHANGE THIS.................................!!
+  const [todayIdx, setTodayIdx] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
   const [screenIdx, setScreenIdx] = useState(1);
