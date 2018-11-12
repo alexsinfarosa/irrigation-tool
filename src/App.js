@@ -12,6 +12,7 @@ import Landing from "./components/Landing";
 import Loading from "./components/Loading";
 
 import format from "date-fns/format";
+import { fi } from "date-fns/locale";
 
 const getLocation = () => {
   const geolocation = navigator.geolocation;
@@ -65,6 +66,7 @@ export default () => {
   // CRUD operations ----------------------------------------------------
   const addField = async () => {
     setIsLoading(true);
+    field.deficitAdjustments = [];
     const data = await getPET(
       field.irrigationDate,
       field.latitude,
@@ -82,6 +84,7 @@ export default () => {
     field.id = Date.now();
     field.data = data;
     field.forecast = forecast;
+    console.log(field);
     setField(field);
 
     const fieldsUpdated = [field, ...fields];
@@ -97,6 +100,7 @@ export default () => {
   const selectField = id => {
     const field = fields.find(field => field.id === id);
     setField(field);
+    console.log(field);
     // const countHrs = differenceInHours(new Date(), new Date(field.id));
 
     // if (countHrs > 3) {
@@ -137,8 +141,9 @@ export default () => {
   );
 
   const resetWaterDeficit = () => {
-    console.log("resetWaterDeficit");
+    // console.log("resetWaterDeficit");
     let fieldCopy = { ...field };
+    console.log(sliderValue);
     fieldCopy.deficitAdjustments.push(sliderValue);
 
     console.log(fieldCopy);
@@ -154,7 +159,7 @@ export default () => {
       todayIdx
     );
 
-    console.log(recalculateDeficit);
+    // console.log(recalculateDeficit);
     const results = recalculateDeficit.deficitDaily.map((val, i) => {
       let p = {};
       p.date = fieldCopy.data[i].date;
@@ -164,24 +169,26 @@ export default () => {
       return p;
     });
 
-    console.log(results);
+    // console.log(results);
 
     const fieldsCopy = [...fields];
-    const idx = fieldsCopy.findIndex(f => f.id === field.id);
+    const idx = fieldsCopy.findIndex(f => f.id === fieldCopy.id);
     const id = Date.now();
     const irrigationDate = new Date(id);
 
+    console.log(fieldCopy.deficitAdjustments);
     fieldCopy.id = id;
     fieldCopy.irrigationDate = irrigationDate;
     fieldCopy.data = results;
     setField(fieldCopy);
+    setSliderValue(0);
 
     fieldsCopy[idx].id = id;
     fieldsCopy[idx].irrigationDate = irrigationDate;
     fieldsCopy[idx].data = results;
     fieldsCopy[idx].deficitAdjustments = fieldCopy.deficitAdjustments;
     setFields(fieldsCopy);
-
+    console.log(fieldsCopy);
     writeToLocalstorage(fieldsCopy);
   };
 

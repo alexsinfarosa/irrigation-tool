@@ -8,6 +8,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import ListIcon from "@material-ui/icons/ListOutlined";
 import CloudIcon from "@material-ui/icons/CloudOutlined";
 import Slide from "@material-ui/core/Slide";
+import Typography from "@material-ui/core/Typography";
 
 import Navigation from "./Navigation";
 import Loading from "./Loading";
@@ -41,9 +42,10 @@ function Field(props) {
     setScreenIdx,
     isLoading,
     resetWaterDeficit,
-    setSliderValue
+    setSliderValue,
+    field
   } = useContext(AppContext);
-  const { classes, isAdjScreen, setIsAdjScreen } = props;
+  const { classes, theme, isAdjScreen, setIsAdjScreen } = props;
 
   return (
     <div className={classes.root}>
@@ -76,6 +78,18 @@ function Field(props) {
           }}
         >
           <Grid container>
+            <Grid item xs={12} align="center">
+              <Typography
+                variant="button"
+                style={{
+                  marginBottom: theme.spacing.unit,
+                  color: theme.palette.grey[800]
+                }}
+              >
+                {field.address.split(",")[0]}
+              </Typography>
+            </Grid>
+
             <FieldTopChart />
             {isAdjScreen ? (
               <Slide direction="left" in={true} mountOnEnter unmountOnExit>

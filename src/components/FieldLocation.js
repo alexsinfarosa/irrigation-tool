@@ -44,9 +44,15 @@ function FieldLocation(props) {
   const [longitude, setLongitude] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { setSwipeble, location, field, setField, clearField } = useContext(
-    AppContext
-  );
+  const {
+    setSwipeble,
+    location,
+    field,
+    setField,
+    clearField,
+    selectField,
+    fields
+  } = useContext(AppContext);
   const { classes, theme, slideIdx, setSlideIdx } = props;
 
   // select address from the list of suggestions
@@ -103,9 +109,8 @@ function FieldLocation(props) {
         leftIcon={
           <ArrowBackIcon
             onClick={() => {
-              handleCloseClick();
-              clearField();
               setSwipeble("main");
+              handleCloseClick();
             }}
           />
         }
