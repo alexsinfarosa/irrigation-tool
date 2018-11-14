@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/irriToolV5/precache-manifest.5c232f4dddc779fd2e3f62b74a177679.js"
+  "/irrigation-tool/precache-manifest.bfcbd233bf9625684351cf4bbf27637f.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/irriToolV5/index.html", {
+workbox.routing.registerNavigationRoute("/irrigation-tool/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
