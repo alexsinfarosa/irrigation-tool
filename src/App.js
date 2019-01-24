@@ -46,14 +46,14 @@ const fieldInitialState = {
   deficitAdjustments: [],
   forecast: null,
   id: null,
-  irrigationDate: new Date(),
+  irrigationDate: new Date("07/15/2017"),
   latitude: null,
   longitude: null,
   soilCapacity: "medium"
 };
 
 export default () => {
-  const [today] = useState(new Date("10/31/2018")); //TESTING CHANGE THIS.................................!!
+  const [today] = useState(new Date("07/28/2017")); //TESTING CHANGE THIS.................................!!
   const [todayIdx, setTodayIdx] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
