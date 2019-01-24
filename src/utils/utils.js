@@ -130,17 +130,17 @@ const getWaterStressCoeff = (Dr, TAW) => {
 };
 
 export const getPET = (sdate, lat, lon, soilCapacity, initDeficit) => {
-  console.log("getPET CALLED!", sdate, lat, lon, soilCapacity, initDeficit);
+  // console.log("getPET CALLED!", sdate, lat, lon, soilCapacity, initDeficit);
   const year = new Date(sdate).getFullYear().toString();
   const latitude = lat.toFixed(4);
   const longitude = lon.toFixed(4);
   // the first date is 03/01
   const url = `${PROXYIRRIGATION}?lat=${latitude}&lon=${longitude}&year=${year}`;
-  console.log(url);
+  // console.log(url);
   return axios
     .get(url)
     .then(res => {
-      console.log(`BrianCALL`, res.data);
+      // console.log(`BrianCALL`, res.data);
       const dates = [...res.data.dates_precip, ...res.data.dates_precip_fcst];
       const pcpns = [...res.data.precip, ...res.data.precip_fcst];
       const pets = [...res.data.pet, ...res.data.pet_fcst];
