@@ -27,7 +27,7 @@ function FieldBarChart(props) {
     p.deficit = obj.deficit === 0 ? 0.0000001 : obj.deficit;
     return p;
   });
-  console.log(window.innerWidth);
+
   return (
     <Grid item xs={12} align="center">
       {results.length >= 3 && (
