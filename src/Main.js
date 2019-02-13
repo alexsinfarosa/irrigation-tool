@@ -12,19 +12,23 @@ export default () => {
   const [isAdjScreen, setIsAdjScreen] = useState(false);
 
   return (
-    <SwipeableViews
-      disabled={isAdjScreen}
-      containerStyle={{
-        height: window.innerHeight,
-        WebkitOverflowScrolling: "touch"
-      }}
-      enableMouseEvents
-      index={screenIdx}
-      onChangeIndex={idx => setScreenIdx(idx)}
-    >
-      <Forecast />
-      <Field isAdjScreen={isAdjScreen} setIsAdjScreen={setIsAdjScreen} />
-      <FieldList />
-    </SwipeableViews>
+    <div style={{ maxWidth: 700, margin: "0 auto" }}>
+      <SwipeableViews
+        disabled={isAdjScreen}
+        containerStyle={{
+          height: window.innerHeight,
+          WebkitOverflowScrolling: "touch"
+          // maxWidth: 900,
+          // margin: "0 auto"
+        }}
+        enableMouseEvents
+        index={screenIdx}
+        onChangeIndex={idx => setScreenIdx(idx)}
+      >
+        <Forecast />
+        <Field isAdjScreen={isAdjScreen} setIsAdjScreen={setIsAdjScreen} />
+        <FieldList />
+      </SwipeableViews>
+    </div>
   );
 };

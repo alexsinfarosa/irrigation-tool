@@ -46,7 +46,6 @@ function Field(props) {
     field
   } = useContext(AppContext);
   const { classes, theme, isAdjScreen, setIsAdjScreen } = props;
-  console.log(field);
   return (
     <div className={classes.root}>
       <Navigation

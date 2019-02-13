@@ -162,7 +162,7 @@ function FieldLocation(props) {
                         disabled: false,
                         error: errorMessage === "" ? false : true,
                         helperText: errorMessage
-                          ? "Invalid address or address not in Northeast"
+                          ? "Invalid address or address not in Northeast of U.S."
                           : "",
                         margin: "normal"
                       })}

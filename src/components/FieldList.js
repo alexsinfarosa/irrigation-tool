@@ -18,6 +18,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Typography from "@material-ui/core/Typography";
 
 import format from "date-fns/format";
 import { determineColor } from "../utils/utils";
@@ -169,7 +170,9 @@ function FieldList(props) {
             hideBackdrop={true}
           >
             <DialogTitle id="alert-dialog-title">
-              Are you sure you want to delete this field?
+              <Typography variant="body1">
+                Are you sure you want to delete this field?
+              </Typography>
             </DialogTitle>
             <DialogContent />
             <DialogActions>

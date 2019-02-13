@@ -12,6 +12,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 const styles = theme => ({
   root: {
     display: "flex",
+    maxWidth: 700,
+    margin: "0 auto",
     justifyContent: "center",
     alignItems: "center",
     background: "#fff",

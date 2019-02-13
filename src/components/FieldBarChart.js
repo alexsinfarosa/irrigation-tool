@@ -29,7 +29,7 @@ function FieldBarChart(props) {
   });
 
   return (
-    <Grid item xs={12} align="center" style={{ height: 250 }}>
+    <Grid item xs={12} align="center">
       {results.length >= 3 && (
         <>
           <Typography
@@ -37,7 +37,7 @@ function FieldBarChart(props) {
             style={{
               color: theme.palette.grey[700],
               marginTop: 32,
-              marginBottom: 16
+              marginBottom: 32
             }}
           >
             water deficit in the last {days > 30 ? 30 : days} days
@@ -46,7 +46,7 @@ function FieldBarChart(props) {
           <ComposedChart
             // style={{ background: "orange" }}
             width={window.innerWidth}
-            height={250}
+            height={180}
             data={results}
             margin={{ top: 2, right: -2, left: -2, bottom: 2 }}
           >

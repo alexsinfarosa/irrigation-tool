@@ -77,7 +77,7 @@ export default () => {
       0
     );
     console.log(data);
-    if (data.length > 0) {
+    if (data) {
       const todayIdx = data.findIndex(
         obj => obj.date === format(today, "MM/dd/yyyy")
       );

@@ -10,6 +10,8 @@ import Typography from "@material-ui/core/Typography";
 const styles = theme => ({
   root: {
     display: "flex",
+    maxWidth: 700,
+    margin: "0 auto",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",

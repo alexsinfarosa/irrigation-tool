@@ -100,6 +100,7 @@ function FieldTopChart(props) {
         </TableHead>
         <TableBody>
           {results.map(d => {
+            console.log(d);
             return (
               <TableRow
                 key={d.id}

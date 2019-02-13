@@ -130,7 +130,7 @@ const getWaterStressCoeff = (Dr, TAW) => {
 };
 
 export const getPET = (sdate, lat, lon, soilCapacity, initDeficit) => {
-  // console.log("getPET CALLED!", sdate, lat, lon, soilCapacity, initDeficit);
+  console.log("getPET CALLED!", sdate, lat, lon, soilCapacity, initDeficit);
   const year = new Date(sdate).getFullYear().toString();
   const latitude = lat.toFixed(4);
   const longitude = lon.toFixed(4);
