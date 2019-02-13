@@ -58,13 +58,13 @@ function Field(props) {
       return p;
     });
   }
-  console.log(todayPlusTwo);
+  // console.log(todayPlusTwo);
 
   let todayObj = {};
   if (todayPlusTwo.length > 0) {
     todayObj = { ...todayPlusTwo[0] };
   }
-  console.log(todayObj);
+  // console.log(todayObj);
 
   return (
     <div className={classes.root}>
@@ -123,8 +123,8 @@ function Field(props) {
                     size="large"
                     variant="outlined"
                     onClick={() => {
-                      setIsAdjScreen(false);
                       resetWaterDeficit();
+                      setIsAdjScreen(false);
                     }}
                   >
                     update
@@ -160,7 +160,7 @@ function Field(props) {
                     setSliderValue(0);
                   }}
                 >
-                  {todayObj.deficit <= 0 ? "water!" : "No water deficit"}
+                  {todayObj.deficit < 0 ? "water!" : "No water deficit"}
                 </Button>
               )}
             </Grid>

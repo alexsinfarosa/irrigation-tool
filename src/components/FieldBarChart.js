@@ -27,7 +27,7 @@ function FieldBarChart(props) {
     p.deficit = obj.deficit === 0 ? 0.0000001 : obj.deficit;
     return p;
   });
-
+  console.log(window.innerWidth);
   return (
     <Grid item xs={12} align="center">
       {results.length >= 3 && (
@@ -45,10 +45,10 @@ function FieldBarChart(props) {
 
           <ComposedChart
             // style={{ background: "orange" }}
-            width={window.innerWidth}
+            width={window.innerWidth < 800 ? window.innerWidth : 700}
             height={180}
             data={results}
-            margin={{ top: 2, right: -2, left: -2, bottom: 2 }}
+            margin={{ top: 2, right: 0, left: -1, bottom: 2 }}
           >
             {results && (
               <Bar dataKey="deficit">
