@@ -46,7 +46,7 @@ function Field(props) {
     field
   } = useContext(AppContext);
   const { classes, theme, isAdjScreen, setIsAdjScreen } = props;
-
+  console.log(field);
   return (
     <div className={classes.root}>
       <Navigation
@@ -91,12 +91,7 @@ function Field(props) {
             </Grid>
 
             <FieldTopChart />
-            <Grid
-              item
-              xs={12}
-              align="center"
-              style={{ marginBottom: theme.spacing.unit * 4 }}
-            >
+            <Grid item xs={12} align="center">
               <Button
                 style={{
                   height: 60,
@@ -115,9 +110,10 @@ function Field(props) {
                   }
                 }}
               >
-                {isAdjScreen ? "update" : "I watered!"}
+                {isAdjScreen ? "update" : "water"}
               </Button>
             </Grid>
+
             {isAdjScreen ? (
               <Slide direction="left" in={true} mountOnEnter unmountOnExit>
                 <FieldDeficitAdj />

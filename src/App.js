@@ -53,7 +53,7 @@ const fieldInitialState = {
 };
 
 export default () => {
-  const [today] = useState(new Date("07/28/2017")); //TESTING CHANGE THIS.................................!!
+  const [today] = useState(new Date("07/28/2017")); //TESTING. CHANGE THIS.................................!!
   const [todayIdx, setTodayIdx] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -63,6 +63,7 @@ export default () => {
   const [fields, setFields] = useState([]);
   const [field, setField] = useState(fieldInitialState);
   const [sliderValue, setSliderValue] = useState(0);
+  const [errorFromServer, setErrorFromServer] = useState(false);
 
   // CRUD operations ----------------------------------------------------
   const addField = async () => {
@@ -75,22 +76,28 @@ export default () => {
       field.soilCapacity,
       0
     );
-    const todayIdx = data.findIndex(
-      obj => obj.date === format(today, "MM/dd/yyyy")
-    );
-    setTodayIdx(todayIdx);
+    console.log(data);
+    if (data.length > 0) {
+      const todayIdx = data.findIndex(
+        obj => obj.date === format(today, "MM/dd/yyyy")
+      );
+      setTodayIdx(todayIdx);
 
-    const forecast = await fetchForecastData(field.latitude, field.longitude);
+      const forecast = await fetchForecastData(field.latitude, field.longitude);
 
-    field.id = Date.now();
-    field.data = data;
-    field.forecast = forecast;
-    setField(field);
+      field.id = Date.now();
+      field.data = data;
+      field.forecast = forecast;
+      setField(field);
 
-    const fieldsUpdated = [field, ...fields];
-    setFields(fieldsUpdated);
-    writeToLocalstorage(fieldsUpdated);
-    setIsLoading(false);
+      const fieldsUpdated = [field, ...fields];
+      setFields(fieldsUpdated);
+      writeToLocalstorage(fieldsUpdated);
+      setIsLoading(false);
+    } else {
+      setErrorFromServer(true);
+      // setIsLoading(false);
+    }
   };
 
   const clearField = () => {
@@ -128,16 +135,13 @@ export default () => {
   }, []);
 
   // Set today index
-  useEffect(
-    () => {
-      if (field.data) {
-        setTodayIdx(
-          field.data.findIndex(obj => obj.date === format(today, "MM/dd/yyyy"))
-        );
-      }
-    },
-    [fields]
-  );
+  useEffect(() => {
+    if (field.data) {
+      setTodayIdx(
+        field.data.findIndex(obj => obj.date === format(today, "MM/dd/yyyy"))
+      );
+    }
+  }, [fields]);
 
   const resetWaterDeficit = () => {
     // console.log("resetWaterDeficit");
@@ -256,7 +260,9 @@ export default () => {
         selectField,
         sliderValue,
         setSliderValue,
-        resetWaterDeficit
+        resetWaterDeficit,
+        errorFromServer,
+        setIsLoading
       }}
     >
       {swipeble === "main" && isLoading && <Loading />}

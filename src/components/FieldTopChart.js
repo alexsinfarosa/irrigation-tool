@@ -79,7 +79,7 @@ function FieldTopChart(props) {
   });
 
   return (
-    <Grid item xs={12} style={{ marginBottom: theme.spacing.unit * 8 }}>
+    <Grid item xs={12} style={{ marginBottom: theme.spacing.unit * 2 }}>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
@@ -105,7 +105,7 @@ function FieldTopChart(props) {
                 key={d.id}
                 style={{
                   border: "none",
-                  borderLeft: `16px solid ${d.color}`,
+                  borderLeft: `24px solid ${d.color}`,
                   height: 40
                 }}
               >
@@ -128,6 +128,7 @@ function FieldTopChart(props) {
                     color: theme.palette.grey[800]
                   }}
                 >
+                  {/* if in deficit row display only dot. If in other rows display number as well */}
                   {d.dayOne < 0 && d.dayOne}
                   {d.dayOne !== null && (
                     <div
@@ -141,44 +142,52 @@ function FieldTopChart(props) {
                     />
                   )}
                 </TableCell>
-                <TableCell
-                  padding="none"
-                  style={{ border: "none", textAlign: "center" }}
-                >
-                  {d.dayTwo <= 0 && (
-                    <span style={{ color: "#fff" }}>{d.dayTwo}</span>
-                  )}
-                  {d.dayTwo !== null && (
-                    <div
-                      style={{
-                        width: 10,
-                        height: 10,
-                        background: d.color,
-                        borderRadius: "50%",
-                        margin: "0 auto"
-                      }}
-                    />
-                  )}
-                </TableCell>
-                <TableCell
-                  padding="none"
-                  style={{ border: "none", textAlign: "center" }}
-                >
-                  {d.dayThree <= 0 && (
-                    <span style={{ color: "#fff" }}>{d.dayThree}</span>
-                  )}
-                  {d.dayThree !== null && (
-                    <div
-                      style={{
-                        width: 10,
-                        height: 10,
-                        background: d.color,
-                        borderRadius: "50%",
-                        margin: "0 auto"
-                      }}
-                    />
-                  )}
-                </TableCell>
+                {(d.id === 2 || d.id === 3) && (
+                  <TableCell
+                    padding="none"
+                    style={{
+                      border: "none",
+                      textAlign: "center",
+                      fontWeight: "bold"
+                    }}
+                  >
+                    {d.dayTwo}
+                    {d.dayTwo !== null && (
+                      <div
+                        style={{
+                          width: 10,
+                          height: 10,
+                          background: d.color,
+                          borderRadius: "50%",
+                          margin: "0 auto"
+                        }}
+                      />
+                    )}
+                  </TableCell>
+                )}
+                {(d.id === 2 || d.id === 3) && (
+                  <TableCell
+                    padding="none"
+                    style={{
+                      border: "none",
+                      textAlign: "center",
+                      fontWeight: "bold"
+                    }}
+                  >
+                    {d.dayThree}
+                    {d.dayThree !== null && (
+                      <div
+                        style={{
+                          width: 10,
+                          height: 10,
+                          background: d.color,
+                          borderRadius: "50%",
+                          margin: "0 auto"
+                        }}
+                      />
+                    )}
+                  </TableCell>
+                )}
               </TableRow>
             );
           })}

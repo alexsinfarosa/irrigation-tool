@@ -46,9 +46,9 @@ function FieldBarChart(props) {
           <ComposedChart
             // style={{ background: "orange" }}
             width={window.innerWidth}
-            height={350}
+            height={250}
             data={results}
-            margin={{ top: 32, right: -2, left: -2, bottom: 48 }}
+            margin={{ top: 2, right: -2, left: -2, bottom: 2 }}
           >
             {results && (
               <Bar dataKey="deficit">
