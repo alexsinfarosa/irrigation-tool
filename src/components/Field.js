@@ -18,6 +18,8 @@ import FieldBarChart from "./FieldBarChart";
 import { AppContext } from "../AppContext";
 import FieldDeficitAdj from "./FieldDeficitAdj";
 
+import { determineColor } from "../utils/utils";
+
 const styles = theme => ({
   root: {
     display: "flex",
@@ -43,9 +45,27 @@ function Field(props) {
     isLoading,
     resetWaterDeficit,
     setSliderValue,
-    field
+    field,
+    todayIdx
   } = useContext(AppContext);
   const { classes, theme, isAdjScreen, setIsAdjScreen } = props;
+
+  let todayPlusTwo = [];
+  if (todayIdx !== 0) {
+    todayPlusTwo = field.data.slice(todayIdx, todayIdx + 3).map((obj, i) => {
+      let p = { ...obj };
+      p.color = determineColor(obj.deficit);
+      return p;
+    });
+  }
+  console.log(todayPlusTwo);
+
+  let todayObj = {};
+  if (todayPlusTwo.length > 0) {
+    todayObj = { ...todayPlusTwo[0] };
+  }
+  console.log(todayObj);
+
   return (
     <div className={classes.root}>
       <Navigation
@@ -89,28 +109,60 @@ function Field(props) {
               </Typography>
             </Grid>
 
-            <FieldTopChart />
+            <FieldTopChart todayPlusTwo={todayPlusTwo} />
             <Grid item xs={12} align="center">
-              <Button
-                style={{
-                  height: 60,
-                  width: 220
-                }}
-                color="primary"
-                size="large"
-                variant="outlined"
-                onClick={() => {
-                  if (isAdjScreen) {
-                    setIsAdjScreen(false);
-                    resetWaterDeficit();
-                  } else {
+              {isAdjScreen ? (
+                <>
+                  <Button
+                    style={{
+                      height: 60,
+                      width: 100,
+                      marginRight: 16
+                    }}
+                    color="primary"
+                    size="large"
+                    variant="outlined"
+                    onClick={() => {
+                      setIsAdjScreen(false);
+                      resetWaterDeficit();
+                    }}
+                  >
+                    update
+                  </Button>
+
+                  <Button
+                    style={{
+                      height: 60,
+                      width: 100
+                    }}
+                    color="primary"
+                    size="large"
+                    variant="outlined"
+                    onClick={() => {
+                      setIsAdjScreen(false);
+                    }}
+                  >
+                    cancel
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  style={{
+                    height: 60,
+                    width: 220
+                  }}
+                  color="primary"
+                  size="large"
+                  variant="outlined"
+                  disabled={todayObj.deficit >= 0}
+                  onClick={() => {
                     setIsAdjScreen(true);
                     setSliderValue(0);
-                  }
-                }}
-              >
-                {isAdjScreen ? "update" : "water"}
-              </Button>
+                  }}
+                >
+                  {todayObj.deficit <= 0 ? "water!" : "No water deficit"}
+                </Button>
+              )}
             </Grid>
 
             {isAdjScreen ? (

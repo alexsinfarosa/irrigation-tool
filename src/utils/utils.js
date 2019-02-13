@@ -47,22 +47,12 @@ const modeldata = {
     }
   }
 };
+const { medium } = modeldata.soildata.soilmoistureoptions;
 
-// const noDeficit =
-//   modeldata.soildata.soilmoistureoptions.medium.saturation -
-//   modeldata.soildata.soilmoistureoptions.medium.fieldcapacity;
-
-const deficitNoStress =
-  modeldata.soildata.soilmoistureoptions.medium.stressthreshold -
-  modeldata.soildata.soilmoistureoptions.medium.fieldcapacity;
-
-const deficitStress =
-  modeldata.soildata.soilmoistureoptions.medium.prewiltingpoint -
-  modeldata.soildata.soilmoistureoptions.medium.fieldcapacity;
-
-// const severeStress =
-//   modeldata.soildata.soilmoistureoptions.medium.wiltingpoint -
-//   modeldata.soildata.soilmoistureoptions.medium.fieldcapacity;
+// const noDeficit = medium.saturation - medium.fieldcapacity;
+const deficitNoStress = medium.stressthreshold - medium.fieldcapacity;
+const deficitStress = medium.prewiltingpoint - medium.fieldcapacity;
+// const severeStress = medium.wiltingpoint - medium.fieldcapacity;
 
 // console.log(noDeficit);
 // console.log(deficitNoStress);

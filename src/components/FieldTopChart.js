@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { withStyles, withTheme } from "@material-ui/core/styles";
 import withRoot from "../withRoot";
 
-import { AppContext } from "../AppContext";
+// import { AppContext } from "../AppContext";
 
 import Grid from "@material-ui/core/Grid";
 import Table from "@material-ui/core/Table";
@@ -12,7 +12,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
 import format from "date-fns/format";
-import { determineColor } from "../utils/utils";
+// import { determineColor } from "../utils/utils";
 
 const levels = [
   {
@@ -53,30 +53,24 @@ const styles = theme => ({
 });
 
 function FieldTopChart(props) {
-  const { field, todayIdx } = useContext(AppContext);
-  const { classes, theme } = props;
-  // console.log(field, todayIdx);
+  // const { field, todayIdx } = useContext(AppContext);
+  const { classes, theme, todayPlusTwo } = props;
 
-  const todayPlusTwo = field.data
-    .slice(todayIdx, todayIdx + 3)
-    .map((obj, i) => {
-      let p = { ...obj };
-      p.color = determineColor(obj.deficit);
+  let results = [];
+  if (todayPlusTwo.length > 0) {
+    results = levels.map((level, i) => {
+      let p = { ...level };
+      p.header =
+        i === 0 ? "" : format(new Date(todayPlusTwo[i - 1].date), "MMM do");
+      p.dayOne =
+        level.color === todayPlusTwo[0].color ? todayPlusTwo[0].deficit : null;
+      p.dayTwo =
+        level.color === todayPlusTwo[1].color ? todayPlusTwo[1].deficit : null;
+      p.dayThree =
+        level.color === todayPlusTwo[2].color ? todayPlusTwo[2].deficit : null;
       return p;
     });
-  // console.log(todayPlusTwo);
-  const results = levels.map((level, i) => {
-    let p = { ...level };
-    p.header =
-      i === 0 ? "" : format(new Date(todayPlusTwo[i - 1].date), "MMM do");
-    p.dayOne =
-      level.color === todayPlusTwo[0].color ? todayPlusTwo[0].deficit : null;
-    p.dayTwo =
-      level.color === todayPlusTwo[1].color ? todayPlusTwo[1].deficit : null;
-    p.dayThree =
-      level.color === todayPlusTwo[2].color ? todayPlusTwo[2].deficit : null;
-    return p;
-  });
+  }
 
   return (
     <Grid item xs={12} style={{ marginBottom: theme.spacing.unit * 2 }}>
@@ -100,7 +94,6 @@ function FieldTopChart(props) {
         </TableHead>
         <TableBody>
           {results.map(d => {
-            console.log(d);
             return (
               <TableRow
                 key={d.id}
