@@ -26,11 +26,11 @@ const modeldata = {
         saturation: 5.0
       },
       medium: {
-        wiltingpoint: 2.0,
-        prewiltingpoint: 2.225,
-        stressthreshold: 2.8,
-        fieldcapacity: 3.5,
-        saturation: 5.5
+        wiltingpoint: 2.0 / 3,
+        prewiltingpoint: 2.225 / 3,
+        stressthreshold: 2.8 / 3,
+        fieldcapacity: 3.5 / 3,
+        saturation: 5.5 / 3
       },
       high: {
         wiltingpoint: 3.0,
@@ -49,15 +49,15 @@ const modeldata = {
 };
 const { medium } = modeldata.soildata.soilmoistureoptions;
 
-// const noDeficit = medium.saturation - medium.fieldcapacity;
+const noDeficit = medium.saturation - medium.fieldcapacity;
 const deficitNoStress = medium.stressthreshold - medium.fieldcapacity;
 const deficitStress = medium.prewiltingpoint - medium.fieldcapacity;
-// const severeStress = medium.wiltingpoint - medium.fieldcapacity;
+const severeStress = medium.wiltingpoint - medium.fieldcapacity;
 
-// console.log(noDeficit);
-// console.log(deficitNoStress);
-// console.log(deficitStress);
-// console.log(severeStress);
+console.log(noDeficit);
+console.log(deficitNoStress);
+console.log(deficitStress);
+console.log(severeStress);
 
 export const determineColor = deficit => {
   if (deficit >= 0) {
