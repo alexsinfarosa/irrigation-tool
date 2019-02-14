@@ -109,7 +109,7 @@ function Field(props) {
               </Typography>
             </Grid>
 
-            <FieldTopChart todayPlusTwo={todayPlusTwo} />
+            <FieldTopChart field={field} todayPlusTwo={todayPlusTwo} />
             <Grid item xs={12} align="center">
               {isAdjScreen ? (
                 <>

@@ -18,22 +18,26 @@ const levels = [
   {
     id: 0,
     name: "No Deficit",
-    color: "#2E933C"
+    color: "#2E933C",
+    icon: ""
   },
   {
     id: 1,
     name: "Deficit, No Stress",
-    color: "#F9DC5C"
+    color: "#F9DC5C",
+    icon: ""
   },
   {
     id: 2,
     name: "Deficit, Stress",
-    color: "#FC9E4F"
+    color: "#FC9E4F",
+    icon: ""
   },
   {
     id: 3,
     name: "Severe Stress",
-    color: "#BA2D0B"
+    color: "#BA2D0B",
+    icon: ""
   }
 ];
 
@@ -54,12 +58,15 @@ const styles = theme => ({
 
 function FieldTopChart(props) {
   // const { field, todayIdx } = useContext(AppContext);
-  const { classes, theme, todayPlusTwo } = props;
+  const { classes, theme, todayPlusTwo, field } = props;
+  console.log(field.forecast);
+  // console.log(todayPlusTwo);
 
   let results = [];
   if (todayPlusTwo.length > 0) {
     results = levels.map((level, i) => {
       let p = { ...level };
+      p.icon = i === 0 ? "" : field.forecast.daily.data.slice(0, 3);
       p.header =
         i === 0 ? "" : format(new Date(todayPlusTwo[i - 1].date), "MMM do");
       p.dayOne =
