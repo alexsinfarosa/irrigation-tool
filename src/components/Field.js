@@ -1,41 +1,41 @@
-import React, { useContext } from "react";
+import React, {useContext} from 'react'
 
-import { withStyles, withTheme } from "@material-ui/core/styles";
-import withRoot from "../withRoot";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import HomeIcon from "@material-ui/icons/Home";
-import ListIcon from "@material-ui/icons/ListOutlined";
-import CloudIcon from "@material-ui/icons/CloudOutlined";
-import Slide from "@material-ui/core/Slide";
-import Typography from "@material-ui/core/Typography";
+import {withStyles, withTheme} from '@material-ui/core/styles'
+import withRoot from '../withRoot'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import HomeIcon from '@material-ui/icons/Home'
+import ListIcon from '@material-ui/icons/ListOutlined'
+import CloudIcon from '@material-ui/icons/CloudOutlined'
+import Slide from '@material-ui/core/Slide'
+import Typography from '@material-ui/core/Typography'
 
-import Navigation from "./Navigation";
-import Loading from "./Loading";
-import FieldTopChart from "./FieldTopChart";
-import FieldBarChart from "./FieldBarChart";
+import Navigation from './Navigation'
+import Loading from './Loading'
+import FieldTopChart from './FieldTopChart'
+import FieldBarChart from './FieldBarChart'
 
-import { AppContext } from "../AppContext";
-import FieldDeficitAdj from "./FieldDeficitAdj";
+import {AppContext} from '../AppContext'
+import FieldDeficitAdj from './FieldDeficitAdj'
 
-import { determineColor } from "../utils/utils";
+import {determineColor} from '../utils/utils'
 
 const styles = theme => ({
   root: {
-    display: "flex",
-    flexDirection: "column",
-    background: "#fff",
-    height: window.innerHeight
+    display: 'flex',
+    flexDirection: 'column',
+    background: '#fff',
+    height: window.innerHeight,
   },
   icon: {
     color: theme.palette.grey[500],
-    fontSize: 32
+    fontSize: 32,
   },
   iconOnFocus: {
     color: theme.palette.primary.main,
-    fontSize: 40
-  }
-});
+    fontSize: 40,
+  },
+})
 
 function Field(props) {
   // console.log("Field Component");
@@ -46,23 +46,23 @@ function Field(props) {
     resetWaterDeficit,
     setSliderValue,
     field,
-    todayIdx
-  } = useContext(AppContext);
-  const { classes, theme, isAdjScreen, setIsAdjScreen } = props;
+    todayIdx,
+  } = useContext(AppContext)
+  const {classes, theme, isAdjScreen, setIsAdjScreen} = props
 
-  let todayPlusTwo = [];
+  let todayPlusTwo = []
   if (todayIdx !== 0) {
     todayPlusTwo = field.data.slice(todayIdx, todayIdx + 3).map((obj, i) => {
-      let p = { ...obj };
-      p.color = determineColor(obj.deficit);
-      return p;
-    });
+      let p = {...obj}
+      p.color = determineColor(obj.deficit)
+      return p
+    })
   }
   // console.log(todayPlusTwo);
 
-  let todayObj = {};
+  let todayObj = {}
   if (todayPlusTwo.length > 0) {
-    todayObj = { ...todayPlusTwo[0] };
+    todayObj = {...todayPlusTwo[0]}
   }
   // console.log(todayObj);
 
@@ -93,7 +93,7 @@ function Field(props) {
       ) : (
         <div
           style={{
-            overflowY: "scroll"
+            overflowY: 'scroll',
           }}
         >
           <Grid container>
@@ -102,10 +102,10 @@ function Field(props) {
                 variant="button"
                 style={{
                   marginBottom: theme.spacing.unit,
-                  color: theme.palette.grey[800]
+                  color: theme.palette.grey[800],
                 }}
               >
-                {field.address.split(",")[0]}
+                {field.address.split(',')[0]}
               </Typography>
             </Grid>
 
@@ -117,14 +117,14 @@ function Field(props) {
                     style={{
                       height: 60,
                       width: 100,
-                      marginRight: 16
+                      marginRight: 16,
                     }}
                     color="primary"
                     size="large"
                     variant="outlined"
                     onClick={() => {
-                      resetWaterDeficit();
-                      setIsAdjScreen(false);
+                      resetWaterDeficit()
+                      setIsAdjScreen(false)
                     }}
                   >
                     update
@@ -133,13 +133,13 @@ function Field(props) {
                   <Button
                     style={{
                       height: 60,
-                      width: 100
+                      width: 100,
                     }}
                     color="primary"
                     size="large"
                     variant="outlined"
                     onClick={() => {
-                      setIsAdjScreen(false);
+                      setIsAdjScreen(false)
                     }}
                   >
                     cancel
@@ -149,18 +149,18 @@ function Field(props) {
                 <Button
                   style={{
                     height: 60,
-                    width: 220
+                    width: 220,
                   }}
                   color="primary"
                   size="large"
                   variant="outlined"
                   disabled={todayObj.deficit >= 0}
                   onClick={() => {
-                    setIsAdjScreen(true);
-                    setSliderValue(0);
+                    setIsAdjScreen(true)
+                    setSliderValue(0)
                   }}
                 >
-                  {todayObj.deficit < 0 ? "water!" : "No water deficit"}
+                  {todayObj.deficit < 0 ? 'water!' : 'No water deficit'}
                 </Button>
               )}
             </Grid>
@@ -176,7 +176,7 @@ function Field(props) {
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default React.memo(withRoot(withStyles(styles)(withTheme()(Field))));
+export default React.memo(withRoot(withStyles(styles)(withTheme()(Field))))

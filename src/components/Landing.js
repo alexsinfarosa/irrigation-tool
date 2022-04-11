@@ -1,47 +1,47 @@
-import React, { useContext } from "react";
-import { AppContext } from "../AppContext";
+import React, {useContext} from 'react'
+import {AppContext} from '../AppContext'
 
-import { withStyles, withTheme } from "@material-ui/core/styles";
-import withRoot from "../withRoot";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import {withStyles, withTheme} from '@material-ui/core/styles'
+import withRoot from '../withRoot'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
   root: {
-    display: "flex",
+    display: 'flex',
     maxWidth: 700,
-    margin: "0 auto",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    background: "#fff",
-    height: window.innerHeight
+    margin: '0 auto',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: '#fff',
+    height: window.innerHeight,
   },
   padding: {
     paddingTop: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit
+    paddingBottom: theme.spacing.unit,
   },
   button: {
     marginTop: theme.spacing.unit * 8,
-    height: theme.spacing.unit * 8
+    height: theme.spacing.unit * 8,
   },
   firstLetter: {
-    color: theme.palette.error.main
-  }
-});
+    color: theme.palette.error.main,
+  },
+})
 
 function Landing(props) {
   // console.log("Landing Component");
-  const { setSwipeble } = useContext(AppContext);
+  const {setSwipeble} = useContext(AppContext)
 
-  const { classes, theme } = props;
+  const {classes, theme} = props
   return (
     <div className={classes.root}>
       <div
         style={{
           padding: theme.spacing.unit,
-          overflowY: "scroll"
+          overflowY: 'scroll',
         }}
       >
         <Grid container>
@@ -68,7 +68,7 @@ function Landing(props) {
               variant="outlined"
               color="secondary"
               className={classes.button}
-              onClick={() => setSwipeble("setupField")}
+              onClick={() => setSwipeble('setupField')}
             >
               Start creating a field
             </Button>
@@ -76,7 +76,7 @@ function Landing(props) {
         </Grid>
       </div>
     </div>
-  );
+  )
 }
 
-export default React.memo(withRoot(withStyles(styles)(withTheme()(Landing))));
+export default React.memo(withRoot(withStyles(styles)(withTheme()(Landing))))

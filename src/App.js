@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import {AppContext} from './AppContext'
 
 import axios from 'axios'
-import {PROXYDARKSKY} from './utils/api'
 
 import {getPET, runWaterDeficitModel} from './utils/utils'
 
@@ -124,14 +123,18 @@ export default () => {
   }
 
   // Get user current latitude and longitude -------------------------------
-  useEffect(async () => {
-    const res = await getLocation()
-    res.payload.then(res => {
-      const latitude = res.coords.latitude
-      const longitude = res.coords.longitude
-      setLocation({latitude, longitude})
-    })
+  useEffect(() => {
+    ;(async () => {
+      const res = await getLocation()
+      res.payload.then(res => {
+        const latitude = res.coords.latitude
+        const longitude = res.coords.longitude
+        setLocation({latitude, longitude})
+      })
+    })()
     readFromLocalstorage()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Set today index
@@ -197,7 +200,9 @@ export default () => {
 
   // Fetch forecast data ----------------------------------------------------
   const fetchForecastData = (latitude, longitude) => {
-    const url = `${PROXYDARKSKY}/${latitude},${longitude}?exclude=flags,minutely,alerts,hourly`
+    const url = `${
+      process.env.REACT_APP_PROXYDARKSKY
+    }/${latitude},${longitude}?exclude=flags,minutely,alerts,hourly`
     return axios
       .get(url)
       .then(res => {
