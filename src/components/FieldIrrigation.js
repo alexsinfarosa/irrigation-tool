@@ -1,25 +1,25 @@
-import React, { useState, useContext } from "react";
+import React, {useState, useContext} from 'react'
 
-import { withStyles, withTheme } from "@material-ui/core/styles";
-import withRoot from "../withRoot";
-import Grid from "@material-ui/core/Grid";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import {withStyles, withTheme} from '@material-ui/core/styles'
+import withRoot from '../withRoot'
+import Grid from '@material-ui/core/Grid'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 
-import Navigation from "../components/Navigation";
-import { AppContext } from "../AppContext";
+import Navigation from '../components/Navigation'
+import {AppContext} from '../AppContext'
 
-import { InlineDatePicker } from "material-ui-pickers";
+import {InlineDatePicker} from 'material-ui-pickers'
 
 const styles = theme => ({
   root: {
-    display: "flex",
-    flexDirection: "column",
-    background: "#fff",
-    height: window.innerHeight
-  }
-});
+    display: 'flex',
+    flexDirection: 'column',
+    background: '#fff',
+    height: window.innerHeight,
+  },
+})
 
 function FieldIrrigation(props) {
   // console.log("FieldIrrigation Component");
@@ -29,22 +29,22 @@ function FieldIrrigation(props) {
     field,
     setField,
     addField,
-    today
-  } = useContext(AppContext);
-  const [irrigationDate, setIrrigationDate] = useState(new Date(today));
-  const { classes, theme, slideIdx, setSlideIdx } = props;
+    today,
+  } = useContext(AppContext)
+  const [irrigationDate, setIrrigationDate] = useState(new Date(today))
+  const {classes, theme, slideIdx, setSlideIdx} = props
   return (
     <div className={classes.root}>
       <Navigation
         leftIcon={<ArrowBackIcon onClick={() => setSlideIdx(slideIdx - 1)} />}
-        centerIcon={"Create Field - step 2/2"}
+        centerIcon={'Create Field - step 2/2'}
         rightIcon={null}
       />
 
       <div
         style={{
           padding: theme.spacing.unit,
-          overflowY: "scroll"
+          overflowY: 'scroll',
         }}
       >
         <Grid container spacing={theme.spacing.unit * 2}>
@@ -52,7 +52,7 @@ function FieldIrrigation(props) {
             item
             xs={12}
             align="center"
-            style={{ marginTop: theme.spacing.unit * 4 }}
+            style={{marginTop: theme.spacing.unit * 4}}
           >
             <Typography variant="h6" gutterBottom>
               When is your last irrigation?
@@ -62,18 +62,18 @@ function FieldIrrigation(props) {
           <Grid
             item
             xs={10}
-            style={{ margin: "0 auto", marginTop: theme.spacing.unit * 4 }}
+            style={{margin: '0 auto', marginTop: theme.spacing.unit * 4}}
           >
             <InlineDatePicker
               onlyCalendar
               keyboard
-              style={{ width: "100%" }}
+              style={{width: '100%'}}
               value={irrigationDate}
               onChange={date => setIrrigationDate(date)}
               disableFuture
               format="MM/dd/yyyy"
               maxDate={new Date(today)}
-              mask={[/\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/]}
+              mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
             />
           </Grid>
 
@@ -81,19 +81,19 @@ function FieldIrrigation(props) {
             item
             xs={12}
             align="center"
-            style={{ marginTop: theme.spacing.unit * 9 }}
+            style={{marginTop: theme.spacing.unit * 9}}
           >
             <Button
-              style={{ height: 60, width: 220 }}
+              style={{height: 60, width: 220}}
               size="large"
               variant="outlined"
               color="secondary"
               disabled={!irrigationDate}
               onClick={() => {
-                setSwipeble("main");
-                setScreenIdx(1);
-                setField({ ...field, irrigationDate });
-                addField();
+                setSwipeble('main')
+                setScreenIdx(1)
+                setField({...field, irrigationDate})
+                addField()
               }}
             >
               start
@@ -102,9 +102,9 @@ function FieldIrrigation(props) {
         </Grid>
       </div>
     </div>
-  );
+  )
 }
 
 export default React.memo(
-  withRoot(withStyles(styles)(withTheme()(FieldIrrigation)))
-);
+  withRoot(withStyles(styles)(withTheme()(FieldIrrigation))),
+)
